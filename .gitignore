@@ -2,3 +2,5 @@
 *.jpg
 *.jpeg
 *.eps
+gravity_inv_direct/gravmat.dat
+gravity_inv/gravmat.dat
