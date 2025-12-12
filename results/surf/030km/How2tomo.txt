@@ -1,0 +1,153 @@
+这一份脚本是用 **GMT（Generic Mapping Tools）** 来绘制南海地区的三维地震层析反演结果的地图。它主要功能是把速度反演结果（`vel.dat`）转成网格，再制图、着色、叠加地理要素，最后输出为 EPS/PDF/JPEG 等格式。下面我逐段解析：
+
+---
+
+## 基本信息
+
+```sh
+#!/bin/sh
+# 绘制南海区域的层析反演结果
+# 作者: Chen Haopeng, HUST
+# 最初: 2013.05.10, 修改为 GMT5 格式: 2020.01.29
+```
+
+这是一个 GMT5 绘图脚本。
+
+---
+
+## 全局设置与文件定义
+
+```sh
+gmt set FORMAT_GEO_MAP ddd
+FNAME="scstomo.ps"         # 默认输出文件名
+velfile="vel.dat"          # 输入速度数据 (xyz 格式)
+path="chinaborder"         # 存放国界、断层等文件的路径
+LATLON="97/101/23/27"      # 区域范围：经度97–101，纬度23–27
+PROJ="M99.0/25.0/5i"       # 投影方式：墨卡托投影，以 (99°E,25°N) 为中心，图宽5英寸
+RESCOAST="f"               # 海岸线分辨率 (f=full)
+BDRYS="3"                  # 边界绘制选项：3=海洋边界
+TICS="1/1"                 # 刻度：经度/纬度间隔 1°
+```
+
+---
+
+## 关键变量
+
+```sh
+depth=${1}      # 从命令行读取深度参数
+label=$2        # 从命令行读取标签
+cptfile="height.cpt"
+grdfile="vel.grd"
+```
+
+绘图时会把第一参数作为深度标注在图上。
+
+---
+
+## 数据插值与网格化
+
+```sh
+gmt surface ${velfile} -G${grdfile} -I1m/1m -R${LATLON} -Lld -Lud
+```
+
+* **surface**：将 `vel.dat` 转换成规则网格 `vel.grd`，分辨率为 1 分。
+* `-Lld -Lud`：限制插值值域在输入数据的最小/最大值之间。
+
+---
+
+## 底图与网格裁剪
+
+```sh
+gmt psbasemap -J${PROJ} -R${LATLON} -B${TICS} -P -K -V > ${FNAME}
+gmt grdcut ${grdfile} -G${grdfile} -R${LATLON}
+```
+
+* **psbasemap**：绘制底图坐标框。
+* **grdcut**：裁剪网格到给定区域。
+
+---
+
+## 自动设定颜色条范围
+
+```sh
+z_min=`gmt grdinfo $grdfile | grep z_min | gawk '{print $3}'`
+z_max=`gmt grdinfo $grdfile | grep z_min | gawk '{print $5}'`
+...
+velscale="$lscalev/$hscalev/0.02"
+gmt makecpt -Cmyrainbow.cpt -T${velscale} -I -Z > ${cptfile}
+```
+
+读取网格最小/最大值，并生成颜色刻度（CPT 文件）。这里用 `myrainbow.cpt` 作为色带。
+
+---
+
+## 绘制主体图像
+
+```sh
+gmt psclip psclip.txt -J${PROJ} -R${LATLON} -P -K -O >>${FNAME}
+gmt grdimage ${grdfile} -J${PROJ} -R${LATLON} -B${TICS} -C${cptfile} -P -O -K >> ${FNAME}
+gmt pscoast -J${PROJ} -R${LATLON} -B${TICS} -N${BDRYS} -Dh -W0.25p -A1000 -P -O -K >> ${FNAME}
+```
+
+* **psclip**：设定裁剪区域（通常是研究区范围）。
+* **grdimage**：绘制速度网格的彩色图像。
+* **pscoast**：叠加海岸线、国界。
+
+---
+
+## 绘制断层线
+
+```sh
+gmt psxy chinaborder/CN-faults.dat -W1.0p,black -R -J -O -K >> ${FNAME}
+gmt psclip -C -O -K -P >> ${FNAME}
+```
+
+叠加黑色断层线。
+
+---
+
+## 添加色标
+
+```sh
+gmt psscale -B0.2/:km/s: -Dx5.6i/2.6i/4.6i/0.2i -C${cptfile} -O -K -S -V >> ${FNAME}
+```
+
+绘制颜色条，刻度间隔 0.2 km/s，标注单位 `km/s`。
+
+---
+
+## 添加文本标注
+
+```sh
+echo 97.7 24 20 0 0 LM "$depth"| gmt pstext -J${PROJ} -R${LATLON} -F+fblack -O -P -V >> ${FNAME}
+```
+
+在地图上 (97.7,24) 位置写入深度值。
+
+---
+
+## 输出文件转换
+
+```sh
+mv ${FNAME} ${depth}.ps
+gmt psconvert -A -P -Te  ${depth}.ps        # 转换为 EPS
+gmt psconvert -A -P -Tj -E1000 ${depth}.ps  # 转换为 JPEG, 1000 dpi
+rm *.ps *.grd ${FNAME}
+```
+
+最后输出为 EPS 和高分辨率 JPEG，清理临时文件。
+
+---
+
+## 总结流程
+
+1. **输入数据**：`vel.dat`（速度结果，xyz格式）。
+2. **插值网格化**：用 `gmt surface` 生成 `vel.grd`。
+3. **绘制底图+速度场**：`psbasemap` + `grdimage`。
+4. **叠加地理要素**：海岸线、断层、国界等。
+5. **加色标**：速度范围 km/s。
+6. **输出成 EPS/JPEG**。
+
+---
+
+

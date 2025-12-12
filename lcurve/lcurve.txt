@@ -1,0 +1,2 @@
+res_s  res_g  resall  lm10  lm10_dif  mrough
+   -nan -nan 81.716

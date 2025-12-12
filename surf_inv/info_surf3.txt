@@ -1,0 +1,49 @@
+
+**************************************
+*** Direct Surface Wave Tomography ***
+**************************************
+
+Model Description:
+===================================
+model origin: latitude,longitude
+   27   97
+model grid spacing: dlat,dlon
+   0.25   0.25
+model dimension: nlat,nlon,nz
+   21    21    12
+
+Forward/Adjoint Computation Parameters:
+===================================
+sublayer = 2
+Number of Threads Used = 4
+
+Inversion Parameters:
+===================================
+smooth = 10.000000, damp = 0.010000
+Min amd max velocity(km/s) = 2.000000, 5.000000
+Max iterations = 1
+Number of Threads Used in Solving Linear System = 4
+
+Dispersion Data:
+===================================
+Rayleigh wave phase velocity used,periods:(s)
+    8.0    10.0    12.0    14.0    16.0    18.0    20.0    22.0    24.0    26.0    28.0    30.0    32.0    34.0    36.0    38.0    40.0 
+The number of traveltime measurements = 25687
+
+Grid points in depth direction:(km):
+===================================
+   0.00    2.00    4.00    6.00    8.00   10.00   15.00   20.00   25.00   30.00   35.00   40.00 
+
+
+Iteration 1
+computing Surface Wave 1-D Frechet Kernel ...
+computing traveltimes and 2-D Frechet Kernel ...
+Assembling derivative Matrix ...
+solving linear systems by LSMR ...
+max negative and positive perturbation: -0.226438 0.0608368
+mean and rms before this iteration(s): -0.0151248 1.04744
+
+synthetic traveltime for the result model 
+mean and rms of traveltime residuals before this iteration(s): -0.0109405 1.04061
+
+Program finishes Successfully!

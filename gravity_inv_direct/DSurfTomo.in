@@ -1,0 +1,31 @@
+########################################################
+# DSurfTomo Program Parameters 
+#########################################################
+
+# input model description:
+21 21 12                          # nlat nlon nz (no. of points in lat lon and depth direction)
+27.0 97.0                         # lat0 lon0 (upper left point,[lat,lon], in degree)
+0.25 0.25                           # dlat dlon (grid interval(degree) in lat and lon direction)
+
+# dispersion forward/adjoint computation parameters
+# Insert 'ninsert' points in the grid-based model 
+# to compute dispersion curves
+2                                 # ninsert (insert sublayers layers in , 2~5)
+4                                 # no.of threads used 
+
+# inversion parameters
+10.0 0.01                         # smooth damp
+1.5 5.5                           # minimum velocity, maximum velocity (a priori information)
+10                                # maximum iteration
+4                                 # no. of threads used in Linear System Solver
+
+# dispersion data description 
+17                                # kmaxRc (followed by periods)
+8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40
+0                                 # kmaxRg (followed by periods)
+0                                 # kmaxLc (followed by periods)
+0                                 # kmaxLg (followed by periods)
+
+# synthetic test
+0                                # synthetic flag(0:real data,1:synthetic)
+0.1                              # noise level, std value of gaussian noise

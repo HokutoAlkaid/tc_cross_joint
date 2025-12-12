@@ -1,0 +1,10 @@
+# GMT common arguments shelf
+-Ba0.05:density(g/km3):
+-JM2i
+-R97/107.8/20/29.9
+-jM2i
+EOF
+i
+EOF
+F
+F
