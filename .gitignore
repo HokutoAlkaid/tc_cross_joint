@@ -4,3 +4,5 @@
 *.eps
 gravity_inv_direct/gravmat.dat
 gravity_inv/gravmat.dat
+*.save
+*.save.*
