@@ -3,7 +3,7 @@
 #########################################################
 
 # input model description:
-21 21 12                          # nlat nlon nz (no. of points in lat lon and depth direction)
+21 21 16                          # nlat nlon nz (no. of points in lat lon and depth direction)
 27.0 97.0                         # lat0 lon0 (upper left point,[lat,lon], in degree)
 0.25 0.25                           # dlat dlon (grid interval(degree) in lat and lon direction)
 
@@ -20,7 +20,7 @@
 4                                 # no. of threads used in Linear System Solver
 
 # dispersion data description 
-17                               # kmaxRc (followed by periods)
+17                                # kmaxRc (followed by periods)
 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40
 0                                 # kmaxRg (followed by periods)
 0                                 # kmaxLc (followed by periods)

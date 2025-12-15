@@ -10,7 +10,7 @@ model origin: latitude,longitude
 model grid spacing: dlat,dlon
    0.25   0.25
 model dimension: nlat,nlon,nz
-   21    21    12
+   21    21    16
 
 Forward/Adjoint Computation Parameters:
 ===================================
@@ -32,7 +32,7 @@ The number of traveltime measurements = 25687
 
 Grid points in depth direction:(km):
 ===================================
-   0.00    2.00    4.00    6.00    8.00   10.00   15.00   20.00   25.00   30.00   35.00   40.00 
+   0.00    2.00    4.00    6.00    8.00   10.00   15.00   20.00   25.00   30.00   35.00   40.00   45.00   50.00   55.00   60.00 
 
 
 Iteration 1
@@ -40,10 +40,10 @@ computing Surface Wave 1-D Frechet Kernel ...
 computing traveltimes and 2-D Frechet Kernel ...
 Assembling derivative Matrix ...
 solving linear systems by LSMR ...
-max negative and positive perturbation: -0.232553 0.0576018
-mean and rms before this iteration(s): 0.00486874 1.01643
+max negative and positive perturbation: -0.0204189 0.015202
+mean and rms before this iteration(s): -0.075747 0.962304
 
 synthetic traveltime for the result model 
-mean and rms of traveltime residuals before this iteration(s): 0.00385973 1.01258
+mean and rms of traveltime residuals before this iteration(s): -0.0759366 0.961755
 
 Program finishes Successfully!

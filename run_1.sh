@@ -53,48 +53,48 @@ cd gravity_inv
       exit 1
   fi
 cd ..
-############
+###########
+###########
 for i in 1 2 3 4 5 6 7 8 9 10
-do
-# direct surf inversion
-cd surf_inv
-bash run.sh
-cp info_surf.txt info_surf${i}.txt
-rm -r info_surf.txt
-  cd results 
-    bash bash.sh
-    cp delta_ms0.dat ../../data
-    cp mod_iter1.dat ../../data
-    cp mod_iter0.dat ../../data/mod_iter0.dat    # 将旧模型 (mod_iter0.dat) 复制到数据交换区
+  do
+  # direct surf inversion
+  cd surf_inv
+    bash run.sh
+    cp info_surf.txt info_surf${i}.txt
+    rm -r info_surf.txt
+    cd results 
+     bash bash.sh
+     cp delta_ms0.dat ../../data
+     cp mod_iter1.dat ../../data
+     cp mod_iter0.dat ../../data/mod_iter0.dat    # 将旧模型 (mod_iter0.dat) 复制到数据交换区
+    cd ..
   cd ..
-cd ..
 
-# direct gravity inversion
-cd gravity_inv
-bash run.sh
-cp info_joint.txt info_joint${i}.txt
-  cd results 
-    bash bash.sh
-    cp delta_mg0.dat ../../data
-    cp joint_mod_iter1.dat ../../data
-    cp joint_mod_iter0.dat ../../data/joint_mod_iter0.dat  #    # 将旧模型复制到数据交换区
+  # direct gravity inversion
+  cd gravity_inv
+    bash run.sh
+    cp info_joint.txt info_joint${i}.txt
+    cd results 
+      bash bash.sh
+      cp delta_mg0.dat ../../data
+      cp joint_mod_iter1.dat ../../data
+      cp joint_mod_iter0.dat ../../data/joint_mod_iter0.dat  #    # 将旧模型复制到数据交换区
+    cd ../
   cd ../
-cd ../
 
-# cross-gradient inversion
-python3 crossgradient_inversion_1.py
+  # cross-gradient inversion
+  python3 crossgradient_inversion_1.py
 
-#trans mod_iter into MOD
-cd results
-  python3 out2init.py mod_iter.dat MOD
-  cp MOD ../surf_inv
-  cp joint_mod_iter.dat ../gravity_inv/initial/joint_mod_iter.dat
+  #trans mod_iter into MOD
+  cd results
+    python3 out2init.py mod_iter.dat MOD
+    cp MOD ../surf_inv
+    cp joint_mod_iter.dat ../gravity_inv/initial/joint_mod_iter.dat
+  cd ../
   
-
-cd ../
 done
 ###########
-############
+###########
 
 #plot results
 cd results/surf

@@ -11,4 +11,4 @@ do
 done
 
 cd allfig 
-bash all.sh
+bash allfig.sh

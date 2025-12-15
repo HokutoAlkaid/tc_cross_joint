@@ -36,7 +36,7 @@ R_MIN=$(echo "$min_x - 0.1" | bc)
 R_MAX=$(echo "$max_x + 0.1" | bc)
 
 # 动态组合成 -R 参数
-LATLON="${R_MIN}/${R_MAX}/0/40"
+LATLON="${R_MIN}/${R_MAX}/0/55"
 LATLON0=$LATLON
 echo "数据范围: $min_x 到 $max_x"
 echo "绘图与插值范围 (LATLON): $LATLON"

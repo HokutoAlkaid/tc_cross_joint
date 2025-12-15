@@ -20,17 +20,17 @@ FNAME="scstomo.ps"
 #####
 velfile="vel.dat"
 
-path="chinaborder"
+path="chinaborder"	 # 边界数据路径
 #SSBlocation="SSB.dat"
 #HYbasin="HYbasin.dat"
 #####
 #    Define map bounds: MINLON/MAXLON/MINLAT/MAXLAT 
 #####
-LATLON="97/101/23/27"
+LATLON="97/101/23/27"	# 地图区域设置
 #####
 #    Define Mercator projection: Center lon,la, Plot_Width   
 #####
-PROJ="M99.0/25.0/5i"
+PROJ="M99.0/25.0/5i"	# 投影设置
 #####
 #    Define Coastline resolution: one of fhilc 
 #    (f)ull, (h)igh, (i)ntermediate, (l)ow, and (c)rude)
@@ -93,7 +93,7 @@ grdfile="vel.grd"
 #   the upper bound and can be the name of a grid file with upper bound values, a fixed 
 #   value, d to set to maximum input value, or u for unconstrained [Default]
 #---
-gmt surface ${velfile} -G${grdfile}  -I1m/1m -R${LATLON} -Lld -Lud
+gmt surface ${velfile} -G${grdfile}  -I1m/1m -R${LATLON} -Lld -Lud	#使用 surface 插值
 gmt psbasemap -J${PROJ} -R${LATLON} -B${TICS} -P -K -V > ${FNAME}
 
 gmt grdcut ${grdfile} -G${grdfile} -R${LATLON}
@@ -121,7 +121,7 @@ lscalev=$z_min
 hscalev=$z_max
 dscale=`echo $z_min $z_max | gawk '{ print int(2.5*($2-$1))/10.0}'`
 echo "----color bar scale $lscalev $hscalev  $dscale ---- "
-velscale="$lscalev/$hscalev/0.02"
+velscale="$lscalev/$hscalev/0.02"   	# 自动生成色标
 gmt makecpt -Cmyrainbow.cpt -T${velscale} -I  -Z > ${cptfile}
 #gmt makecpt -Cseis.cpt -T${velscale}   -Z > ${cptfile}
 
@@ -139,10 +139,31 @@ gmt psclip psclip.txt -J${PROJ} -R${LATLON} -P -K -O >>${FNAME}
 #      
 #---
 
-gmt grdimage ${grdfile} -J${PROJ} -R${LATLON} -B${TICS} -C${cptfile}  -P -O -K  >> ${FNAME}
+gmt grdimage ${grdfile} -J${PROJ} -R${LATLON} -B${TICS} -C${cptfile}  -P -O -K  >> ${FNAME}	#绘制彩色底图
 
-gmt pscoast -J${PROJ} -R${LATLON} -B${TICS} -N${BDRYS}  -Dh  -W0.25p -A1000 -P -O -K   >> ${FNAME}
+# ==================================================
+#绘制等值线 (Add Contours)
+# -C0.1 : 每隔 0.1 km/s 画一条等值线
+# -A0.2+f8p : 每隔 0.2 km/s 标注数值，字体大小 8p
+# -W0.5p,black : 等值线宽度 0.5p，颜色黑色
+gmt grdcontour ${grdfile} -J -R -C0.1 -A0.2+f8p -W0.5p,black -O -K >> ${FNAME}
+# ==================================================
 
+gmt pscoast -J${PROJ} -R${LATLON} -B${TICS} -N${BDRYS}  -Dh  -W0.25p -A1000 -P -O -K   >> ${FNAME}	#绘制海岸线和边界
+
+# =================腾冲火山标注=========================
+# 腾冲火山坐标
+TC_LON=98.4
+TC_LAT=25.0
+
+# 绘制火山符号
+# 使用 psxy 绘制符号：0.15i 大小，填充红色，边框 1p 黑色
+echo "${TC_LON} ${TC_LAT}" | gmt psxy -J -R -St0.15i -Gred -W0.5p,black -O -K >> ${FNAME}
+
+# 绘制火山标签
+echo "${TC_LON} ${TC_LAT} TCV" | \
+gmt pstext -J -R -D0.15i/0.15i -F+f12p,black -O -K >> ${FNAME}		#标签位置
+# ==========================================
 
 ########
 #  psvelo command. Plot velocity vectors, crosses, and wedges on maps
@@ -178,14 +199,14 @@ gmt psclip -C -O -K -P >> ${FNAME}
 #gmt psxy Khorat_Plateau.txt -W1.5p,white -L  -R -J -O -K >> ${FNAME}
 
 #gmt psscale  -B$dscale/:km/s:  -Dx5.6i/2.3i/4.6i/0.2i -C${cptfile}  -O  -K  -S -V >> ${FNAME}
-gmt psscale  -B0.2/:km/s:  -Dx5.6i/2.6i/4.6i/0.2i -C${cptfile}  -O  -K  -S -V >> ${FNAME}
+gmt psscale  -B0.2/:km/s:  -Dx5.6i/2.6i/4.6i/0.2i -C${cptfile}  -O  -K  -S -V >> ${FNAME}	#绘制色标尺
 
 #plot the location of city
 #gmt psxy $path/citylocation.txt -J${PROJ} -R${LATLON} -Sktriangle/0.05i -Gblack  -O  -K -V >>${FNAME}
 #gmt pstext $path/cityname.txt -J${PROJ} -R${LATLON} -F+f8p,black  -Y0.3c -O -K -P -V  >> ${FNAME}
 
 #echo 111.2 24.8 22 0 0 LM "$label"| gmt pstext -J${PROJ} -R${LATLON} -F+fblue -O -P -K -V  >> ${FNAME}
-echo 100.2 23.2 20 0 0 LM "$depth"| gmt pstext -J${PROJ} -R${LATLON} -F+fblack -O -P  -V  >> ${FNAME}
+echo 100.2 23.2 20 0 0 LM "$depth"| gmt pstext -J${PROJ} -R${LATLON} -F+fblack -O -P  -V  >> ${FNAME}	#闭合 PS 文件
 #echo 102.0 23.0 16 0 0 LM "Joint"| gmt pstext -J${PROJ} -R${LATLON}  -O -P -V  >> ${FNAME}
 
 
@@ -208,7 +229,7 @@ echo 100.2 23.2 20 0 0 LM "$depth"| gmt pstext -J${PROJ} -R${LATLON} -F+fblack -
 #   ps2raster -A -P -Te  ${FNAME} 
 #   gmt5, we should use psconvert
 
-#---
+#---格式转换与清理
 mv ${FNAME} ${depth}.ps
 gmt psconvert -A -P -Te  ${depth}.ps
 gmt psconvert -A -P -Tj -E1000 ${depth}.ps 

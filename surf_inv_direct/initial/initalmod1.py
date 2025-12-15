@@ -22,7 +22,7 @@ dy = 0.25
 lat = 27.0 - np.arange(nx) * dx
 lon = 97.0 + np.arange(ny) * dy
 
-dep = np.array([0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0])                
+dep = np.array([0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,55.0,60.0])                
 nz=dep.shape[0]
 vsref=np.zeros((nz))
 
@@ -32,7 +32,7 @@ vsref=np.zeros((nz))
 #  layer_thickness  vs_velocity
 #  depmod is the depth of each layer.
 #--
-modfile="scsavemod.txt"
+modfile="ynavemod.txt"
 mod=np.loadtxt(modfile)
 nmod=mod.shape[0]
 depmod=np.zeros((nmod+1))

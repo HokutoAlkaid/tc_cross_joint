@@ -3,7 +3,7 @@
 #########################################################
 
 # input model description:
-21 21 12                          # nlat nlon nz (no. of points in lat lon and depth direction)
+21 21 16                          # nlat nlon nz (no. of points in lat lon and depth direction)
 27.0 97.0                         # lat0 lon0 (upper left point,[lat,lon], in degree)
 0.25 0.25                           # dlat dlon (grid interval(degree) in lat and lon direction)
 

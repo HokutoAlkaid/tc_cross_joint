@@ -6,7 +6,7 @@ rm *.dat
 rm $velfile
 cp ../$velfile .
 
-for i in  002 004 006 008 010 015 020 025 030 035 040 
+for i in  002 004 006 008 010 015 020 025 030 035 040 045 050 055
 do
   rm vel.dat
   awk '{if($3==depth1) print $1,$2,$4}' depth1=$i $velfile > vel.dat
