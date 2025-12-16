@@ -11,7 +11,7 @@ def main():
     if len(sys.argv) < 3:
         print("Usage: python3 veltodensi.py <input_Vs_model> <output_Density_model>")
         # 默认回退逻辑，兼容旧用法
-        input_file = "joint_mod_iter10.dat"
+        input_file = "mod_iter10.dat"
         output_file = "joint_densi_iter10.dat"
         print(f"Using default: {input_file} -> {output_file}")
     else:

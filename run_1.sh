@@ -108,8 +108,7 @@ cd ..
 cd results
   #cp mod_iter.dat ./gmt_slice_ref/mod_iter.dat
   cd gmt_slice_ref
-     bash bash1.sh
-     bash bash2.sh
+     bash bash.sh
   cd ..
 cd ..
     

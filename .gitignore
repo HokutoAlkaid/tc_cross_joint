@@ -6,3 +6,16 @@ gravity_inv_direct/gravmat.dat
 gravity_inv/gravmat.dat
 *.save
 *.save.*
+inf_surf*.txt
+inf_joint*.txt
+info_surf*.txt
+info_joint*.txt
+mod_iter[0-9]*.dat
+joint_mod_iter[0-9]*.dat
+res_grav[0-9]*.dat
+info_mkmat.txt
+res[0-9]*.dat
+[0-9]*km/
+[0-9]*.[0-9]*km/
+[0-9]*.[0-9]*km_sli/
+res_surf[0-9]*.dat

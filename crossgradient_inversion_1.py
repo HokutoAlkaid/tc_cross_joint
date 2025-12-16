@@ -128,7 +128,7 @@ def main():
 
     # Set up joint inversion system
     alpha_s = 1
-    alpha_g = 1.25
+    alpha_g = 0.4
     beta_t = 0.1
 
     n = len(data1[:, 3])

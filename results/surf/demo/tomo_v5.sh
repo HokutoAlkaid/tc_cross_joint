@@ -26,7 +26,7 @@ path="chinaborder"	 # 边界数据路径
 #####
 #    Define map bounds: MINLON/MAXLON/MINLAT/MAXLAT 
 #####
-LATLON="97/101/23/27"	# 地图区域设置
+LATLON="97.5/101/23.5/26.5"	# 地图区域设置
 #####
 #    Define Mercator projection: Center lon,la, Plot_Width   
 #####
@@ -206,7 +206,7 @@ gmt psscale  -B0.2/:km/s:  -Dx5.6i/2.6i/4.6i/0.2i -C${cptfile}  -O  -K  -S -V >>
 #gmt pstext $path/cityname.txt -J${PROJ} -R${LATLON} -F+f8p,black  -Y0.3c -O -K -P -V  >> ${FNAME}
 
 #echo 111.2 24.8 22 0 0 LM "$label"| gmt pstext -J${PROJ} -R${LATLON} -F+fblue -O -P -K -V  >> ${FNAME}
-echo 100.2 23.2 20 0 0 LM "$depth"| gmt pstext -J${PROJ} -R${LATLON} -F+fblack -O -P  -V  >> ${FNAME}	#闭合 PS 文件
+echo 100.2 23.7 20 0 0 LM "$depth"| gmt pstext -J${PROJ} -R${LATLON} -F+fblack -O -P  -V  >> ${FNAME}	# 深度标签
 #echo 102.0 23.0 16 0 0 LM "Joint"| gmt pstext -J${PROJ} -R${LATLON}  -O -P -V  >> ${FNAME}
 
 
