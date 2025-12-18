@@ -21,3 +21,4 @@ res[0-9]*.dat
 res_surf[0-9]*.dat
 *.jar
 bfg-report/
+.bfg-report/
