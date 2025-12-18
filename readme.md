@@ -1,4 +1,10 @@
+bash run.sh以运行程序，
+surf_inv_dircet是用于生成初始速度模型的单独面波反演模块，
+初始模型为ynavemod.txt，云南地区模型，
+veltodensi.py通过Borcher经验公式将初始速度模型转化为初始密度模型，
+crossgradient_inversion.py是交叉梯度的核心反演模块，
+surf_inv和gravity_inv为联合反演中两种单独反演模块，
 交叉梯度联合反演速度模型与密度模型的绘制结果都在results里，
 surf文件夹里是速度模型，
-gravity文件夹里是密度模型（单位km/s）,
-如有需要转换成密度模型，可以通过/home/chp/Desktop/Indochina_CG/CG_Joint/gravity_inv_direct/results_densi文件夹的脚本转换为密度结果
+gravity文件夹里是密度模型（单位km/s），
+slice文件夹内是面波模型剖面图

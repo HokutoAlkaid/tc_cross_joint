@@ -83,7 +83,7 @@ for i in 1 2 3 4 5 6 7 8 9 10
   cd ../
 
   # cross-gradient inversion
-  python3 crossgradient_inversion_1.py
+  python3 crossgradient_inversion.py
 
   #trans mod_iter into MOD
   cd results
