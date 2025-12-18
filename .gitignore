@@ -19,3 +19,5 @@ res[0-9]*.dat
 [0-9]*.[0-9]*km/
 [0-9]*.[0-9]*km_sli/
 res_surf[0-9]*.dat
+*.jar
+bfg-report/
