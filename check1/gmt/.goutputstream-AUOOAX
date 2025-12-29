@@ -1,0 +1,93 @@
+#!/bin/sh
+#####
+#    The purpose of the Script is to plot the ray density of Huabei Region
+#####
+#    Author:Chen Haopeng,PHD of SGG,Wuhan Univeristy,China
+#    Email: chp@whu.edu.cn
+#    Creatied time     : 2014.01.21 15:06
+#    Last Modified time: 2014.01.21 15:06
+#####
+# gmtset PLOT_DEGREE_FORMAT ddd:mm:ss
+gmtset PLOT_DEGREE_FORMAT ddd
+#####
+#    Define the default name of the PostScript output
+#####
+FNAME="raydensity.ps"
+#####
+#    Define the file name of the tomography file
+#####
+xyzfile="file.txt"
+#####
+#    Define map bounds: MINLON/MAXLON/MINLAT/MAXLAT 
+#####
+LATLON="111/120/37/42"
+
+#####
+#    Define Mercator projection: Center lon,la, Plot_Width   
+#####
+PROJ="M116.0/40/5i"
+
+#####
+#    Define Coastline resolution: one of fhilc 
+#    (f)ull, (h)igh, (i)ntermediate, (l)ow, and (c)rude)
+#  . The resolution drops off by 80% between data sets.
+#####
+RESCOAST="h"
+
+#####
+#    Define boundaries for pscoast 
+#    1 = National boundaries 
+#    2 = State boundaries within the Americas 
+#    3 = Marine boundaries 
+#    a = All boundaries (1-3) pscoast 
+#####
+BDRYS="3"
+
+#####
+#    Sets map boundary annotation and tickmark intervals
+#    2 is the latitude interval, and f represents the minor tick spacing(1)
+#    1 is the longitude tick space. 
+#    for small region, "m" reprsents arc minute and "c" represent arc second
+#####
+TICS="2f1/1"
+
+lowscale="2.995"
+highscale="3.605"
+hscale="$lowscale/$highscale/0.01"
+cptfile="raynumber.cpt"
+grdfile="raynumber.grd"
+
+#makecpt -Cgray -T${hscale}  -I -Z -V > ${cptfile}
+#makecpt -Crainbow -T${hscale}  -I -Z -V > ${cptfile}
+makecpt -Cseis -T${hscale}  -I -Z -V > ${cptfile}
+#---
+#  convert txt file to grd file.
+#  xyz2grd command£¬-I option set the step£¬c is arc second
+#                  10c/10c is 10¡°X10¡°¡£m is arc minute¡£
+#  xyz2grd need that the xyz data is regular. For irregular data, 
+#  surface command is recommended.
+#  -V Selects verbose mode, which will send progress reports to stderr 
+#  -: Toggles between (longitude,latitude) and (latitude,longitude) input 
+#     and/or output [Default is (longitude,latitude)].
+#  caution:
+#      note that as the xyzfile is global 1x1deg, and the data is that of 
+#      midle piont of the grid. When we use the xyz2grd or surface command
+#      to convert xyzfile to 1x1deg grid file, the -R options must be 
+#      -R-179.5/179.5/-89.5/89.5, and that of grdimage is -R-180/180/-90/90.
+#      error will occur if we don't do like this.
+#      for small scale data tomography, we also must caution this. 
+#---
+#xyz2grd ${xyzfile} -G${grdfile}   -I0.5/0.5  -R111.25/119.75/37.25/41.75 -V
+#xyz2grd ${xyzfile} -G${grdfile}   -I0.5m -R111.25/119.75/37.25/41.75 -V 
+surface ${xyzfile} -G${grdfile}   -I2m -R$LATLON -V 
+#surface ${xyzfile} -G${grdfile}  -I0.5/0.5  -R111.25/119.75/37.25/41.75 -V 
+
+#---
+#  grdclip 
+#  grdclip input.grd -Goutput.grd -Sahigh/above -Sblow/below -V
+#  -Sahigh/above  set all data > high to above
+#  -Sblow/below   set all data < low to below
+#---
+grdclip ${grdfile} -G${grdfile} -Sa3.6/3.6 -Sb3.0/3.0 -V
+
+grd2xyz ${grdfile} -Z

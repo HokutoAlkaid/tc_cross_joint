@@ -1,0 +1,8 @@
+# GMT common arguments shelf
+-B1/10:Depth(km):WneS
+-JM103.0/25/5i
+-JX4id/-2.0i
+-R98/105/0/60
+-y0.15
+-jX4id/-2.0i
+EOF
