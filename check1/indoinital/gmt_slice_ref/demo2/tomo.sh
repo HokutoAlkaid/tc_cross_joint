@@ -23,8 +23,8 @@ path="tectonic"
 #####
 #    Define map bounds: MINLON/MAXLON/MINLAT/MAXLAT 
 #####
-LATLON0="7/26/0/80"
-LATLON="15/24/0/60"
+LATLON0="21/28/0/70"
+LATLON="23.5/26.5/0/60"
 #####
 #    Define Mercator projection: Center lon,la, Plot_Width   
 #####

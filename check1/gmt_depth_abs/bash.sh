@@ -36,6 +36,8 @@ do
   cd ..
 done
 
+bash copyfig.sh
+
 cd allfig
    bash bash.sh
 cd ..

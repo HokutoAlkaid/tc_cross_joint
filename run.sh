@@ -7,7 +7,7 @@ rm $timefile
 
 # create initial Velocity MOD
 cd surf_inv_direct
-  #bash run.sh
+  bash run.sh
   cd results
   python3 out2init.py mod_iter10.dat MOD
   cp MOD ../../surf_inv
@@ -55,7 +55,7 @@ cd gravity_inv
 cd ..
 ###########
 ###########
-for i in 1 2 3 4 5 6 7 8 9 10
+for i in {1..10}
   do
   # direct surf inversion
   cd surf_inv

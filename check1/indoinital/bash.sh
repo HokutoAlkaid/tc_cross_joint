@@ -22,7 +22,7 @@ python indoinital.py
 #   plot the vertial slice of the inital model
 #---
 
-#cd gmt_slice_ref
-  # bash bash1.sh 
-   #bash bash2.sh   
-#cd ..
+cd gmt_slice_ref
+   bash bash.sh 
+   
+cd ..

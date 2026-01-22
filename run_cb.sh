@@ -9,6 +9,7 @@ rm $timefile
 #   Firstly, We create the initial model
 #---
 cd check1
+   bash bash_0.sh
    bash bash.sh
 cd ..
 
@@ -49,7 +50,7 @@ cd ..
 #---
 #   Thirdly, We perform the cross joint inversion code
 #---
-for i in 1
+for i in {1..20}
   do
   # direct surf inversion
   cd surf_inv
@@ -90,11 +91,7 @@ done
 ###########
 
 #plot results
-cd results/surf
-  bash bash.sh
-cd ..
-  
-cd gravity
+cd results/gmt_vel_joint
   bash bash.sh
 cd ..
 

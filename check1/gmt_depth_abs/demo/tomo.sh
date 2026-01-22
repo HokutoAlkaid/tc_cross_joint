@@ -24,7 +24,7 @@ path="tectonic"
 #    Define map bounds: MINLON/MAXLON/MINLAT/MAXLAT 
 #####
 
-LATLON="97/102/22/27"
+LATLON="97.5/101/23.5/26.5"
 #####
 #    Define Mercator projection: Center lon,la, Plot_Width   
 #####
@@ -87,8 +87,8 @@ makecpt -Cmy_seis.cpt -T${velscale} -Z > ${cptfile}
 #     and/or output [Default is (longitude,latitude)]. 
 #---
 size=0.1
-#xyz2grd ${velfile} -G${grdfile} -Ddegree -I0.1  -R${LATLON} -V -:
-surface ${velfile} -G${grdfile}  -I2m/2m -R${LATLON} -V 
+#gmt xyz2grd ${velfile} -G${grdfile} -I1m  -R${LATLON} -V 
+surface ${velfile} -G${grdfile}  -I1m/1m -R${LATLON} -V 
 pscoast -J${PROJ} -R${LATLON} -B${TICS} -N${BDRYS}  -Dh -G200 -W0.25p -A100 -P -K  > ${FNAME}
 #psclip $path/psclip.txt -J${PROJ} -R${LATLON} -K -P -O  >>${FNAME}
 grdimage ${grdfile} -J${PROJ} -R${LATLON} -B${TICS} -C${cptfile} -G -K -P -O  >> ${FNAME}

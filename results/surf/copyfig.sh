@@ -6,9 +6,10 @@
 #mkdir allfig/eps
 for i in ${i}*km
 do
-   cp ${i}/*.jpg allfig/jpg
+   #cp ${i}/*.jpg allfig/jpg
    cp ${i}/*.eps allfig/eps
 done
 
 cd allfig 
-bash allfig.sh
+   bash allfig.sh
+cd ..

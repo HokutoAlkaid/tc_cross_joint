@@ -28,7 +28,7 @@ cd ..
 #   plot the slice in the same latitude
 #---
 n=0
-for i in 25.5
+for i in 25.2
 do
   rm vel.dat
   #awk '{if($3==depth1) print $1,$2,$4}' depth1=$i $velfile > vel.dat

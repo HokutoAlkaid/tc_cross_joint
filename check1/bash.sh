@@ -27,8 +27,8 @@ do
     #----
     dv1="-0.3"
     dv2="0.3"
-    grdlon="97.0 102.0 5" 
-    grdlat="22.0 27.0 5"
+    grdlon="97.0 102.0 10" 
+    grdlat="22.0 27.0 10"
     echo $dv1 $dv2 >checkboard.in
     echo $grdlon  >>checkboard.in
     echo $grdlat  >>checkboard.in
@@ -55,6 +55,10 @@ cd model
 cd ..
 
 cd indoinital
+   bash bash.sh
+cd ..
+
+cd gmt_depth_abs
    bash bash.sh
 cd ..
 
