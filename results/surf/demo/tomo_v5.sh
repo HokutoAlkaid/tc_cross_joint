@@ -100,11 +100,32 @@ gmt grdcut ${grdfile} -G${grdfile} -R${LATLON}
 #---
 #   automatically set the scale of the color bar from the grid file
 #---
-z_min=`gmt grdinfo $grdfile | grep z_min | gawk '{print $3}'`
-z_max=`gmt grdinfo $grdfile | grep z_min | gawk '{print $5}'`
+#z_min=`gmt grdinfo $grdfile | grep z_min | gawk '{print $3}'`
+#z_max=`gmt grdinfo $grdfile | grep z_min | gawk '{print $5}'`
 
-z_min=`echo $z_min | gawk '{print int($1*10.0+0.5)/10.0}'`
-z_max=`echo $z_max | gawk '{print int($1*10.0+0.5)/10.0}'`
+#z_min=`echo $z_min | gawk '{print int($1*10.0+0.5)/10.0}'`
+#z_max=`echo $z_max | gawk '{print int($1*10.0+0.5)/10.0}'`
+# --- 修正后的提取逻辑 ---
+# 使用 -C 直接按列提取：第 6 列是 z_min，第 7 列是 z_max
+read z_min z_max <<< $(gmt grdinfo $grdfile -C | awk '{print $6, $7}')
+
+# 检查是否成功提取到数值，如果没有则给定一个合理的默认范围（腾冲区通常为 2.0-5.0）
+if [ -z "$z_min" ] || [ "$z_min" == "0" ]; then
+    echo "Warning: Failed to auto-detect velocity range, using default 2.0-5.0"
+    z_min=2.0
+    z_max=5.0
+else
+    # 对提取到的数值进行取整处理（保留一位小数）
+    z_min=`echo $z_min | awk '{print int($1*10.0)/10.0}'`
+    z_max=`echo $z_max | awk '{print int($1*10.0+0.9)/10.0}'`
+fi
+
+#echo "---- 色标范围: $z_min 到 $z_max ----"
+
+# 确保生成的 velscale 格式正确
+velscale="${z_min}/${z_max}/0.02"
+gmt makecpt -Cmyrainbow.cpt -T${velscale} -I -Z > ${cptfile}
+
 #---
 #   we use the mean value of the grid to set the scale bar in order 
 #   to show the low and high velocity anomaly.
