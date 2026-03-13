@@ -1,0 +1,7 @@
+# GMT common arguments shelf
+-B0.2/:km/s:
+-JM116.0/40/5i
+-R111/120/37/42.0
+-y-0.15
+-jM116.0/40/5i
+EOF
